@@ -1,0 +1,17 @@
+# Node
+node_modules/
+
+# Frontend builds
+dist/
+build/
+
+# Environment
+.env
+.env.*
+
+# Java
+target/
+
+# IDE
+.idea/
+.vscode/

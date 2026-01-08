@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: smart-clinic-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smart_clinic
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
