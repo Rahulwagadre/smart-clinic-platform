@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'MAVEN3'
+        maven 'Maven3'
         jdk 'JDK17'
     }
 
@@ -10,25 +10,31 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Rahulwagadre/smart-clinic-platform.git'
+                git branch: 'dev', url: 'https://github.com/Rahulwagadre/smart-clinic-platform.git'
             }
         }
 
         stage('Build Project') {
             steps {
-                bat 'mvn clean compile'
+                dir('backend/smart-clinic-api') {
+                    bat 'mvn clean compile'
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'mvn test'
+                dir('backend/smart-clinic-api') {
+                    bat 'mvn test'
+                }
             }
         }
 
         stage('Package Application') {
             steps {
-                bat 'mvn clean package'
+                dir('backend/smart-clinic-api') {
+                    bat 'mvn clean package'
+                }
             }
         }
 
