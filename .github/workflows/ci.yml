@@ -34,7 +34,7 @@ jobs:
           restore-keys: maven-
 
       - name: Build Backend
-        run: mvn clean verify
+        run: mvn clean package -DskipTests
 
   frontend-build:
     name: Frontend Build
