@@ -14,7 +14,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/health").permitAll()
+                .requestMatchers("/health", "/api/v1/clinics", "/api/v1/auth/login").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(); // TEMPORARY (JWT comes next sprint)
