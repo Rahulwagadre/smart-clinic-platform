@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { login } from "../api/authApi";
+import { signup } from "../api/authApi";
 
-function LoginPage() {
+function SignupPage() {
   const [form, setForm] = useState({
+    clinicName: "",
     email: "",
     password: "",
+    phone: "",
   });
 
   const handleChange = (e) => {
@@ -15,27 +16,25 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(form);
-      console.log("Login success:", response.data);
-      alert("Login successful");
+      await signup(form);
+      alert("Signup successful! Please login.");
     } catch (err) {
-      alert("Invalid credentials");
+      alert("Signup failed");
     }
   };
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Clinic Signup</h2>
       <form onSubmit={handleSubmit}>
+        <input name="clinicName" placeholder="Clinic Name" onChange={handleChange} />
         <input name="email" placeholder="Email" onChange={handleChange} />
         <input name="password" type="password" placeholder="Password" onChange={handleChange} />
-        <button type="submit">Login</button>
+        <input name="phone" placeholder="Phone" onChange={handleChange} />
+        <button type="submit">Signup</button>
       </form>
-      <p>
-        Don’t have an account? <Link to="/signup">Signup</Link>
-      </p>
     </div>
   );
 }
 
-export default LoginPage;
+export default SignupPage;
