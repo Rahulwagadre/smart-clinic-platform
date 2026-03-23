@@ -1,6 +1,7 @@
 package com.smartclinic.user.service;
 
 import com.smartclinic.clinic.entity.Clinic;
+import com.smartclinic.common.security.JwtUtil;
 import com.smartclinic.common.security.Role;
 import com.smartclinic.user.dto.LoginRequest;
 import com.smartclinic.user.dto.LoginResponse;
@@ -16,10 +17,12 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     public boolean existsByEmailAndClinicId(String email, UUID clinicId) {
@@ -46,10 +49,13 @@ public class UserService {
             throw new RuntimeException("Invalid credentials");
         }
 
+        String token = jwtUtil.generateToken(savedUser.getId(), savedUser.getEmail(), savedUser.getRole().name());
+
         LoginResponse response = new LoginResponse(
                 savedUser.getId(),
                 savedUser.getEmail(),
-                savedUser.getRole()
+                savedUser.getRole(),
+                token
         );
 
         return response;
