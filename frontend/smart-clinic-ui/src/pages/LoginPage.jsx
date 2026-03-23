@@ -16,6 +16,7 @@ function LoginPage() {
     e.preventDefault();
     try {
       const response = await login(form);
+      localStorage.setItem("token", response.data.token);
       console.log("Login success:", response.data);
       alert("Login successful");
     } catch (err) {
