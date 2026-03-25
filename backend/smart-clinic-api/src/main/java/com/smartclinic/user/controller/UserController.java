@@ -4,6 +4,7 @@ import com.smartclinic.user.dto.LoginRequest;
 import com.smartclinic.user.dto.LoginResponse;
 import com.smartclinic.user.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +22,7 @@ public class UserController {
         return userService.login(request);
     }
 
+    @PreAuthorize("hasRole('CLINIC_ADMIN')")
     @GetMapping("/testing")
     public String login() {
         return "testing";
